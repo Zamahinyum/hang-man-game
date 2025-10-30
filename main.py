@@ -1,22 +1,29 @@
 """
 Hangman Game - Main Entry Point
-This module serves as the entry point for the Hangman game.
-It orchestrates the game flow by calling functions from other modules.
 """
 
 from game.engine import play_game
 from game.wordlist import load_words, get_categories
 from ui.display import display_welcome, display_statistics, display_menu
 from pathlib import Path
-import json
 
 
 def load_statistics():
     """Load game statistics from file."""
-    stats_file = Path("game_log/statistics.json")
+    stats_file = Path("game_log/statistics.txt")
     if stats_file.exists():
-        with open(stats_file, 'r') as f:
-            return json.load(f)
+        try:
+            with open(stats_file, 'r') as f:
+                lines = f.readlines()
+                stats = {}
+                for line in lines:
+                    if ':' in line:
+                        key, value = line.strip().split(':', 1)
+                        stats[key.strip()] = int(value.strip())
+                return stats
+        except (ValueError, IOError):
+            pass
+    
     return {
         "games_played": 0,
         "wins": 0,
@@ -27,10 +34,13 @@ def load_statistics():
 
 def save_statistics(stats):
     """Save game statistics to file."""
-    stats_file = Path("game_log/statistics.json")
+    stats_file = Path("game_log/statistics.txt")
     stats_file.parent.mkdir(parents=True, exist_ok=True)
     with open(stats_file, 'w') as f:
-        json.dump(stats, f, indent=4)
+        f.write(f"games_played: {stats['games_played']}\n")
+        f.write(f"wins: {stats['wins']}\n")
+        f.write(f"losses: {stats['losses']}\n")
+        f.write(f"total_score: {stats['total_score']}\n")
 
 
 def main():
@@ -76,7 +86,7 @@ def main():
             
         elif choice == '3':
             # Quit
-            print("\nThanks for playing Hangman! Goodbye!")
+            print("\nThanks for playing Hangman! bye bye!")
             break
         else:
             print("Invalid choice. Please try again.")
