@@ -150,7 +150,6 @@ The hangman has 7 states (0-6 wrong guesses):
 - **Dependencies**: None (uses only Python standard library)
 - **Path Management**: Uses `pathlib` for cross-platform compatibility
 - **File Operations**: Automatic directory creation with `mkdir(parents=True, exist_ok=True)`
-- **Code Style**: Follows PEP8 guidelines
 - **Modularity**: Each module has a clear, single responsibility
 
 ## Module Responsibilities
@@ -164,19 +163,9 @@ The hangman has 7 states (0-6 wrong guesses):
 ## Development Notes
 
 - All file operations use `pathlib` for platform independence
-- Statistics are stored in JSON format for easy reading/editing
 - Game logs are human-readable text files
 - No external dependencies required
-- Modular design allows easy extension and modification
-
-## Credits
-
-Created as an educational project to demonstrate:
-- Modular Python programming
-- File I/O operations
-- Game state management
-- Clean code practices
-- User input validation
+- Modular design allows easy extension and modification.
 
 ## License
 
